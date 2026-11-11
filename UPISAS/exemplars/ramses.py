@@ -1,4 +1,9 @@
+import platform
+
 from UPISAS.exemplar import Exemplar
+
+# The scenario image is published per architecture: arm64 (Apple Silicon) or amd64 (Intel/AMD)
+ARCH = "arm64" if platform.machine().lower() in ("arm64", "aarch64") else "amd64"
 
 
 class RAMSES(Exemplar):
@@ -10,7 +15,7 @@ class RAMSES(Exemplar):
     def __init__(self, auto_start=False, container_name="simulation-scenario"):
         docker_config = {
             "name": container_name,
-            "image": "giamburrasca/scenario1:arm64",
+            "image": f"giamburrasca/scenario1:{ARCH}",
             "network": "ramses-sas-net",
             "environment": {
                 "ADAPT": "0",
